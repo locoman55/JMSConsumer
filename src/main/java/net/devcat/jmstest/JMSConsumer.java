@@ -33,9 +33,9 @@ public class JMSConsumer {
     }
 
     public static void main(String[] argv) {
-        String name = null;
+        String name = "MyTopic";
         int timeout = 0;
-        ChannelType type = ChannelType.UNKNOWN;
+        ChannelType type = ChannelType.TOPIC;
         MsgQueue msgQueue = new MsgQueue();
         JMSInChannel inChannel = null;
         Connection connection = null;
