@@ -79,19 +79,20 @@ public class JMSConsumer {
         t.start();
         
         while (!done) {
-        	Message message = msgQueue.getMsg(timeout);
-        	if (message instanceof TextMessage) {
-        		
-        		try {
-        			textMsg = (TextMessage) message;
-					System.out.printf("MSG: %s\n", textMsg.getText());
-				} catch (JMSException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-        	}
+            Message message = msgQueue.getMsg(timeout);
+            try {
+                if (message instanceof TextMessage) {
+                    textMsg = (TextMessage) message;
+                        System.out.printf("MSG: %s\n", textMsg.getText());
+                } else if (message instanceof BytesMessage) {
+                    UserConsumer consumer = new UserConsumer();
+                    consumer.handleMsg((BytesMessage)message);
+                }
+            } catch (JMSException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
-        
         System.exit(0);
     }
 }
